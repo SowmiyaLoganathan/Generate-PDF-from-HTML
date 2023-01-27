@@ -1,4 +1,4 @@
-﻿namespace PdfFromHTML
+﻿namespace PDF_generation_API
 {
     public class ConversionOptions
     {

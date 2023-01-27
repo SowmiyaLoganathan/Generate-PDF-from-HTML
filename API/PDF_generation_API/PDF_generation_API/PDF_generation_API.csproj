@@ -8,11 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Scriban" Version="5.5.2" />
-    <PackageReference Include="Syncfusion.HtmlToPdfConverter.Net.Windows" Version="20.4.0.43" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="template\" />
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.Net.Windows" Version="20.4.0.44" />
   </ItemGroup>
 
 </Project>

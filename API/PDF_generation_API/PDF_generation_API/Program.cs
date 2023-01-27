@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-using PdfFromHTML;
+using PDF_generation_API;
 using System.Dynamic;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,22 +28,22 @@ app.MapPost("/pdf", async (HttpContext context) =>
         String path = Path.GetFullPath("template/");
 
         var conversion = new HtmlToPdfConversion();
-        var pdf = conversion.ConvertToPDF(htmlText, path, jsonData,options);
+        var pdf = conversion.ConvertToPDF(htmlText, path, jsonData, options);
 
         context.Response.ContentType = "application/pdf";
         await context.Response.Body.WriteAsync(pdf);
     }
-    catch(Exception exception)
+    catch (Exception exception)
     {
-        
+
     }
 });
 
 app.Run();
 
 void CopyAssets(List<string> assets, IFormFileCollection files)
-{  
-    if(Directory.Exists("template/"))
+{
+    if (Directory.Exists("template/"))
     {
         System.IO.DirectoryInfo di = new DirectoryInfo("template/");
 

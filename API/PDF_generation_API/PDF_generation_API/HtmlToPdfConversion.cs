@@ -5,7 +5,7 @@ using Scriban.Runtime;
 using Newtonsoft.Json;
 using Syncfusion.Pdf.Graphics;
 
-namespace PdfFromHTML
+namespace PDF_generation_API
 {
     public class HtmlToPdfConversion
     {
@@ -93,6 +93,4 @@ namespace PdfFromHTML
             return scriptObject;
         }
     }
-
-
 }
