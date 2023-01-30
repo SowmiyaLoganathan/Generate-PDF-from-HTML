@@ -179,9 +179,35 @@ table tfoot tr td:first-child {
 The following screenshot shows the output of the HTML template with styled CSS.
 <img src="Templates/Screenshots/invoiceHTMLTemplate.png" alt="Invoice HTML Template" width="100%" Height="Auto"/>
 
-### Use Syncfusion Web API Calls 
+### Use PDF generator Web API Calls 
+The [Minimal API with ASP.NET Core project](https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-7.0&tabs=visual-studio) is used to create PDF generation API. In this application, we have convert the given HTML and assets (JSON, image,font, etc) to text using ``StreamReader `` class based on the client request and convert it to HTML to PDF document. Please refer the below code example for more details,
 
-The [.NET Console application](https://learn.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio?pivots=dotnet-7-0) is used to create Syncfusion Web API. In this application, we have used **RestClient** to sets the server IP address. 
+```csharp
+
+var html = await context.Request.ReadFormAsync();
+var value = html.AsQueryable().ToList().Where(x => x.Key == "application/json").FirstOrDefault().Value.ToString();
+var options = JsonConvert.DeserializeObject<ConversionOptions>(value);
+
+string htmlText = "";
+string jsonData = "";
+if (options != null)
+{
+  htmlText = ReadText(html.Files[options.Index].OpenReadStream());
+  jsonData = ReadText(html.Files[options.Data].OpenReadStream());
+  CopyAssets(options.Assets, html.Files);
+}
+
+String path = Path.GetFullPath("template/");
+var conversion = new HtmlToPdfConversion();
+var pdf = conversion.ConvertToPDF(htmlText, path, jsonData, options);
+context.Response.ContentType = "application/pdf";
+await context.Response.Body.WriteAsync(pdf);
+
+```
+
+
+### Call Web API from C# console application 
+The [.NET Console application](https://learn.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio?pivots=dotnet-7-0) is used to create client application. In this application, we have used **RestClient** to sets the server IP address from the [RestSharp](https://www.nuget.org/packages/RestSharp) NuGet package. 
 
 ```csharp
 var client = new RestClient("https://localhost:7094/pdf"); 
@@ -220,7 +246,7 @@ if (response.StatusCode == System.Net.HttpStatusCode.OK)
 
 ``` 
 
-### Run the server and calling the API from Client 
+### Steps to run the server and calling the API from Client 
 
 Step 1: Download both the server and client application. 
 
@@ -238,8 +264,8 @@ Screenshot of the generated invoice PDF document:
 
 ## Sample Templates 
 
-Template Name | Description 
---- | --- 
-[Invoice](https://github.com/SowmiyaLoganathan/Generate-PDF-from-HTML/tree/main/Templates/Invoice) | An invoice is a commercial document issued by a seller to a buyer relating to a sale transaction and indicating the products, quantities, and agreed-upon prices for products or services the seller had provided the buyer. 
-[BoardingPass](https://github.com/SowmiyaLoganathan/Generate-PDF-from-HTML/tree/main/Templates/BoardingPass) | A boarding pass is a document provided by an airline during check-in, giving a passenger permission to board the airplane for a particular flight.
-[Lease Agreement](https://github.com/SowmiyaLoganathan/Generate-PDF-from-HTML/tree/main/Templates/LeaseAgreement) | A rental agreement is a contract of rental, usually written, between the owner of a property and a renter who desires to have temporary possession of the property.
+Template Name | HTML Template | Description 
+--- | --- | ---
+[Invoice](https://github.com/SowmiyaLoganathan/Generate-PDF-from-HTML/tree/main/Templates/Invoice) | <img src="Templates/Screenshots/Invoice.jpg" alt="Invoice HTML Template" width="100%" Height="Auto"/> | An invoice is a commercial document issued by a seller to a buyer relating to a sale transaction and indicating the products, quantities, and agreed-upon prices for products or services the seller had provided the buyer. 
+[BoardingPass](https://github.com/SowmiyaLoganathan/Generate-PDF-from-HTML/tree/main/Templates/BoardingPass) | <img src="Templates/Screenshots/BoardingPass.jpg" alt="BoardingPass HTML Template" width="100%" Height="Auto"/> | A boarding pass is a document provided by an airline during check-in, giving a passenger permission to board the airplane for a particular flight.
+[Lease Agreement](https://github.com/SowmiyaLoganathan/Generate-PDF-from-HTML/tree/main/Templates/LeaseAgreement) | <img src="Templates/Screenshots/LeaseAgreement.jpg" alt="LeaseAgreement HTML Template" width="100%" Height="Auto"/> | A rental agreement is a contract of rental, usually written, between the owner of a property and a renter who desires to have temporary possession of the property.
