@@ -1,22 +1,22 @@
 # Generate PDF documents from dynamic HTML using Syncfusion PDF generator API 
 
-This repository explains how to generate PDF documents from dynamic HTML using Syncfusion PDF genrator API. Design your document with simple HTML and CSS, and then call our API to generate the PDF document. 
+This repository explains how to generate PDFs from dynamic HTML using the Syncfusion PDF generator API. Design your document using HTML and CSS, then utilize the Web API to create the PDF."
 
 ## Syncfusion PDF generator API 
 
-The Syncfusion PDF generator API allows the users to create a completely new PDF documents from dynamic HTML files easily and quickly. Our API supports all the HTML files structured with all available customization options. 
+The Syncfusion PDF generator API enables quick and easy creation of new PDF documents from dynamic HTML files. This Web API supports all HTML structures and customization options.
 
 ## Steps to create HTML invoice and conveter to a PDF document using WebAPI
 1. Create HTML template 
 2. CSS Styling 
-3. Use Syncfusion Web API Calls 
+3. Utilize Syncfusion Web API Calls 
 4. Add HTML File
 5. Add Additional Assets (ie., fonts, images, etc)
-6. Run the server and calling the API from Client 
+6. Start the server and invoke the API from Client 
 
 ### Create an HTML Template 
 
-An HTML template contains placeholders with {{mustache}} syntax. It is used to bind the actual data to the HTML template. For this example, we'll use the [Scriban scripting language](https://github.com/scriban/scriban) to create the placeholders. It's a lightweight scripting language and engine for .NET. The below HTML template (index.html) has been designed by adding the invoice number, company details and some additional datas with inline CSS for styling. 
+An HTML template features {{mustache}} syntax placeholders for data binding. For this illustration, we'll employ the [Scriban scripting language](https://github.com/scriban/scriban) to establish these placeholders. Scriban is a lightweight .NET scripting language and engine. The following HTML template (index.html) displays the invoice number, company information, and supplementary data, incorporating inline CSS for styling. 
 
 **index.html**
 ```html
@@ -86,7 +86,7 @@ An HTML template contains placeholders with {{mustache}} syntax. It is used to b
 
 ### CSS Styling 
 
-The Cascading Style Sheets (CSS) is a style sheet language used for describing the presentation of a HTML document. In this case, we have marked the heading as bold, add text with custom font, add logo and styling the table. 
+The Cascading Style Sheets (CSS) is a style sheet language used for describing the presentation of a HTML document. In this instance, we have designated the heading as bold, added custom font text, inserted a logo, and styled the table."
 
 **style.css**
 ```css
@@ -179,8 +179,12 @@ table tfoot tr td:first-child {
 The following screenshot shows the output of the HTML template with styled CSS.
 <img src="Templates/Screenshots/invoiceHTMLTemplate.png" alt="Invoice HTML Template" width="100%" Height="Auto"/>
 
-### Use PDF generator Web API Calls 
-The [Minimal API with ASP.NET Core project](https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-7.0&tabs=visual-studio) is used to create PDF generation API. In this application, we have convert the given HTML and assets (JSON, image,font, etc) to text using ``StreamReader `` class based on the client request and convert it to HTML to PDF document. Please refer the below code example for more details,
+### Utilize Syncfusion Web API Calls 
+Minimal APIs are architected to create HTTP APIs with minimal dependencies. They are ideal for microservices and apps that want to include only the minimum files, features, and dependencies in ASP.NET Core. Kindly refer the below link to create the project in Visual Studio 2022. 
+[Steps to create minimal API project with ASP.NET Core 7.0](https://learn.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-7.0&tabs=visual-studio)
+
+In this approach, the [StreamReader](https://learn.microsoft.com/en-us/dotnet/api/system.io.streamreader?view=net-7.0) class to convert the provided HTML and JSON files to text based on the client's request. Then, we integrate the HTML text along with the necessary assets to generate the final PDF document.
+
 
 ```csharp
 
@@ -207,14 +211,15 @@ await context.Response.Body.WriteAsync(pdf);
 
 
 ### Call Web API from C# console application 
-The [.NET Console application](https://learn.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio?pivots=dotnet-7-0) is used to create client application. In this application, we have used **RestClient** to sets the server IP address from the [RestSharp](https://www.nuget.org/packages/RestSharp) NuGet package. 
+The client application in this implementation is a .NET Console application built with .NET version 7. To create a new .NET console application using Visual Studio 2022, please follow the guidance provided in [this](https://learn.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio?pivots=dotnet-7-0) link. Within the application, we utilize the **RestClient** from the [RestSharp](https://www.nuget.org/packages/RestSharp) NuGet package to set the server IP address.  
 
 ```csharp
 var client = new RestClient("https://localhost:7094/pdf"); 
 ```
 
-#### Add HTML file and additional assets 
-We need to include the HTML and CSS file in the **RestRequest** and send as many additional assets (ie., fonts, images, PDF size, etc) with the request in the ``assets`` key of the HTML. 
+#### Incorporating HTML files and additional assets
+The inclusion of the HTML and CSS files in the **RestRequest** is necessary. Additionally, any supplementary assets such as fonts, images, and PDF size specifications should be sent along with the request, with the **assets** key of the HTML serving as the designated location.
+
 ``Assets passed in the request must match the name used to reference in the file.``
 
 ```csharp
@@ -246,7 +251,7 @@ if (response.StatusCode == System.Net.HttpStatusCode.OK)
 
 ``` 
 
-### Steps to run the server and calling the API from Client 
+### Steps to start the server and invoking the Web API from Client 
 
 Step 1: Download both the server and client application. 
 
@@ -254,12 +259,12 @@ Step 2: Open the solution files of both projects using Visual Studio.
 
 Step 3: Rebuild the solution to install the required NuGet package. 
 
-Step 4: First run the server application (PDF_from_HTML_API) and then the published website will open in the browser. 
+Step 4: First run the Web API application (PDF_from_HTML_API), which will lauch the published website in the browser. 
 <img src="Templates/Screenshots/Server_web.png" alt="Invoice HTML Template" width="100%" Height="Auto"/>
 
-Step 5: Now copy the localhost path (https://localhost:7094/pdf) and add it in RestClient class of client application (HTML_to_PDF_Console). This will creates the PDF document (Result.pdf) in the **bin/Debug/net7.0/** folder. 
+Step 5: Take the localhost path (i.e., https://localhost:7094/pdf) and insert it into the RestClient constructor of the client application. Upon running the client application, this will result in the generation of a PDF document (Result.pdf) within the designated folder (bin/debug/net7.0/).
 
-Screenshot of the generated invoice PDF document:
+Upon successful conversion, you will receive a PDF document as illustrated in the following screenshot.  
 <img src="Templates/Screenshots/Output.png" alt="Invoice HTML Template" width="100%" Height="Auto"/>
 
 ## Sample Templates 
